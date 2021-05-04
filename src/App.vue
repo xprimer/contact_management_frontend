@@ -1,21 +1,41 @@
 <template>
   <div id="app">
-    <router-view>
-    </router-view>
+    <nav-bar :logedIn="this.logedIn" :user="this.user"></nav-bar>
+    <router-view :user="this.user"> </router-view>
   </div>
 </template>
 
 <script>
+import NavBar from "./templates/partials/NavBar";
 
 export default {
-  name: 'App',
-  components: {
+  data() {
+    return {
+      user: null,
+    };
   },
-  methods: {
-    
-  }
-
-}
+  name: "App",
+  components: {
+    NavBar,
+  },
+  methods: {},
+  provide() {
+    return {
+      user: this.user,
+      updateUser: (data) => {
+        this.user = data;
+      },
+    };
+  },
+  computed: {
+    logedIn() {
+      if (this.user != null) {
+        return true;
+      }
+      return false;
+    },
+  },
+};
 </script>
 
 <style>

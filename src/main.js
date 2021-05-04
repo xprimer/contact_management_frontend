@@ -13,7 +13,8 @@ Vue.use(BootstrapVueIcons)
 
 const router = new VueRouter({
   routes,
-  mode: 'history'
+  mode: 'history',
+  linkActiveClass: 'active'
 })
 Vue.use(VueRouter)
 Vue.config.productionTip = false
