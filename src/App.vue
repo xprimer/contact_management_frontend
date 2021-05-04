@@ -25,6 +25,9 @@ export default {
       updateUser: (data) => {
         this.user = data;
       },
+      clearUser: () => {
+        this.user = null
+      }
     };
   },
   computed: {

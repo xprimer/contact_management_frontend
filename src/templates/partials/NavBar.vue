@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <a class="navbar-brand" href="/">Contact Management Project</a>
     <button
       class="navbar-toggler"
@@ -16,7 +16,7 @@
           <router-link
             to="login"
             tag="a"
-            class="nav-link btn btn-lg btn-primary text-white"
+            class="nav-link btn btn-lg btn-primary text-white my-2"
           >
             Login
           </router-link>
@@ -28,10 +28,12 @@
               class="btn btn-secondary dropdown-toggle"
               data-toggle="dropdown"
             >
-              {{this.user.username}}
+              {{ this.user.username }}
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <button class="dropdown-item text-danger" type="button">Logout</button>
+              <button @click="logginOut" class="dropdown-item text-danger" type="button">
+                Logout
+              </button>
             </div>
           </div>
         </li>
@@ -41,9 +43,32 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "nav-bar",
-  props: ["logedIn",'user'],
+  props: ["logedIn", "user"],
+  inject: ["clearUser"],
+  data() {
+    return {};
+  },
+  methods: {
+    logginOut() {
+      axios(
+        {
+          method: "GET",
+          withCredentials: true,
+          url: "http://localhost:3000/api/v1/user/logout",
+          responseType: 'json'
+        },
+        { credential: "same-site" }
+      ).then((response) => {
+        console.log(response.data);
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+  },
 };
 </script>
 

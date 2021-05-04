@@ -38,14 +38,14 @@
               </small>
             </div>
           </div>
-          <div class="card-footer">
-            <input type="submit" value="Login" class="btn btn-success" />
+          <div class="card-footer d-flex justify-content-center align-items-center">
+            <input type="submit" value="Login" class="btn btn-success mx-auto" />
           </div>
         </form>
       </div>
       <div v-if="this.logedUser === true" class="card mt-3 mx-auto shadow-sm">
         <p class="text-warning text-center text-uppercase text-bold ">You already loged in !</p>
-        <router-link to="home" tag="a" class="btn btn-primary">
+        <router-link to="home" tag="a" class="btn btn-lg btn-primary">
           Back to Home
         </router-link>
       </div>
@@ -62,8 +62,9 @@
             class="close"
             data-dismiss="alert"
             aria-label="Close"
+            @click="clearErrors"
           >
-            <span @click="clearErrors" aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
       </div>
@@ -118,15 +119,18 @@ export default {
               this.updateUser(response.data.data[0]) ;
             } else if (
               response.data.status === 400 &&
-              response.data.messages.legnth !== 0
+              response.data.messages.length !== 0
             ) {
               console.log(response.data.messages);
               response.data.messages.map((error) => {
                 this.errors.push(error);
               });
+            } else {
+              this.errors.push("Fail to login ! Please make sure you have entered exact username and password .");
             }
           })
           .catch((error) => {
+            this.errors.push("Fail to login ! Please make sure you have entered exact username and password.");
             console.log(error);
           });
       }
