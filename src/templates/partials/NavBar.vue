@@ -21,6 +21,11 @@
             Login
           </router-link>
         </li>
+        <li v-if="this.logedIn===true" class="nav-item">
+          <router-link to="dashboard" tag="a" class="nav-link btn btn-success text-white mx-1">
+            Dashboard
+          </router-link>
+        </li>
         <li class="nav-item" v-if="this.logedIn === true">
           <div class="btn-group">
             <button
@@ -47,7 +52,7 @@ import axios from "axios";
 
 export default {
   name: "nav-bar",
-  props: ["logedIn", "user"],
+  props: ["logedIn", "user", "doLogOut"],
   inject: ["clearUser"],
   data() {
     return {};
@@ -64,6 +69,10 @@ export default {
         { credential: "same-site" }
       ).then((response) => {
         console.log(response.data);
+        if(response.data.status === 'success') {
+          this.doLogOut();
+          this.$router.push({name : 'home'});
+        }
       }).catch(err => {
         console.log(err);
       });

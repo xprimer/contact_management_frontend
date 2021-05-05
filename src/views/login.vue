@@ -45,7 +45,7 @@
       </div>
       <div v-if="this.logedUser === true" class="card mt-3 mx-auto shadow-sm">
         <p class="text-warning text-center text-uppercase text-bold ">You already loged in !</p>
-        <router-link to="home" tag="a" class="btn btn-lg btn-primary">
+        <router-link to="/" tag="a" class="btn btn-lg btn-primary">
           Back to Home
         </router-link>
       </div>

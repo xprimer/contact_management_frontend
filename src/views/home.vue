@@ -3,7 +3,7 @@
         <div class="bg-overlay"></div>
         <h1 class="text-center title d-absolute">CONATCT MANAGEMENT PROJECT</h1>
         <h2 class="sec-title text-white text-center">Easy to manage your conatcts, numbers, meetings in just ONE PLACE.</h2> 
-        <router-link to="login" tag="a" class="get-btn btn btn-lg btn-primary shadow">
+        <router-link :to="this.isLogedIn===true ? 'dashboard' : 'login'" tag="a" class="get-btn btn btn-lg btn-primary shadow">
             GETTING STARTED
         </router-link>
     </div>
@@ -13,7 +13,8 @@
 export default {
     name: 'Home',
     components: {
-    }
+    },
+    props: ['isLogedIn']
 }
 </script>
 
