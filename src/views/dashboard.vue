@@ -1,10 +1,18 @@
 <template>
   <div class="dashboard-wrapper">
     <div
-      v-if="this.sidebarStatus === true"
+      v-if="this.sidebarStatus === false"
       @click="this.toggleSidebar"
       class="dashboard__overlay"
     ></div>
+    <div
+      class="dashboard-sidebar__mini-btn bg-light shadow-sm"
+      @click="this.setSidebarLeft"
+    >
+      <span class="dashboard-sidebar__mini-icon text-dark">
+        <i class="fas fa-ellipsis-h"></i>
+      </span>
+    </div>
     <div
       class="dashboard-sidebar"
       :class="
@@ -15,7 +23,7 @@
     >
       <div
         class="dashboard-sidebar__button"
-        :class="this.sidebarStatus === true ? 'd-none' : ''"
+        :class="this.sidebarStatus === false ? 'd-none' : ''"
         @click="this.toggleSidebar"
       >
         <div class="dashboard-sidebar__icon">
@@ -24,24 +32,30 @@
       </div>
       <ul class="dashboard-sidebar__menu">
         <router-link
-          @click="toggleSidebar"
-          :to="item.link"
+          :to="{ name: item.link }"
           tag="li"
           v-for="(item, index) in this.sidebarItems"
           :key="index"
           class="dashboard-sidebar__item"
         >
-          <i class="dashboard-sidebar__icon" :class="item.icon"></i>
+          <i
+            class="dashboard-sidebar__icon"
+            :class="item.icon"
+            @click="toggleSidebar"
+          ></i>
           <span
-            :class="sidebarStatus===false ? 'd-none' : ''"
+            :class="sidebarStatus === true ? 'd-none' : ''"
             class="dashboard-sidebar__text"
+            @click="toggleSidebar"
           >
             {{ item.text }}
           </span>
         </router-link>
       </ul>
     </div>
-    <div class="dashboard-content container-fluid m-0 p-0"></div>
+    <div class="dashboard-content container bg-ligtht mx-auto">
+      <router-view> </router-view>
+    </div>
   </div>
 </template>
 
@@ -52,18 +66,18 @@ export default {
   components: {},
   data() {
     return {
-      sidebarStatus: false,
+      sidebarStatus: true,
       sidebarItems: [
         {
-          text: "item 1",
-          icon: "fa fa-user",
-          link: "events",
+          text: "Dashboard",
+          icon: "fa fa-house-user",
+          link: "dashboard-summary",
           hide: this.sidebarStatus,
         },
         {
-          text: "item 1",
-          icon: "fa fa-user",
-          link: "events",
+          text: "Contacts",
+          icon: "fa fa-address-book",
+          link: "dashboard-contacts",
           hide: this.sidebarStatus,
         },
         {
@@ -85,6 +99,12 @@ export default {
     toggleSidebar() {
       this.sidebarStatus = !this.sidebarStatus;
     },
+    setSidebarLeft() {
+      document
+        .querySelector(".dashboard-sidebar")
+        .setAttribute("left", "0 !important");
+      this.sidebarStatus = !this.sidebarStatus;
+    },
   },
   computed: {
     getSidebarStt() {
@@ -96,10 +116,16 @@ export default {
       this.$router.push({ name: "login" });
     }
   },
+  deactivated() {
+    this.$router.push("/dashboard/");
+  },
 };
 </script>
 
 <style lang="scss">
+.dashboard-sidebar__mini-btn {
+  display: none;
+}
 .dashboard-wrapper {
   position: relative;
   box-sizing: border-box;
@@ -111,17 +137,22 @@ export default {
 }
 
 .dashboard-sidebar {
-  padding-top: 200px;
   position: absolute;
   position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 0 0;
   top: 0%;
   left: 0;
   min-width: 200px;
-  height: 100%;
+  min-height: 100%;
   background-color: #5f5f5f;
   transition: all 0.2s;
-  // box-shadow: 7px 3px 10px rgba(0, 0, 0, 0.6);
   &__menu {
+    height: 100%;
+    width: 100%;
     padding-left: 0;
     list-style-type: none;
     display: flex;
@@ -170,7 +201,8 @@ export default {
     justify-content: center;
     position: absolute;
     right: -19px;
-    top: 25%;
+    top: 50%;
+    transform: translateY(-50%);
     background-color: #5f5f5f;
     height: 30px;
     width: 20px;
@@ -179,13 +211,12 @@ export default {
     cursor: pointer;
     box-shadow: 1px 1px rgba(0, 0, 0, 0.6);
   }
-  &--isOpen {
-    padding-top: 200px;
+  &--isClose {
     position: absolute;
     position: fixed;
     top: 0%;
     left: 0;
-    min-width: 35px;
+    min-width: 50px;
     height: 100%;
     background-color: #5f5f5f;
     transition: all 0.2s;
@@ -204,5 +235,45 @@ export default {
 
 .fa-chevron-left {
   color: white !important;
+}
+
+// Dashboard content CSS
+.dashboard-content {
+  height: 100vh;
+}
+
+// Sidebar on small screen
+@media only screen and (min-width: 768px) {
+  .dashboard-content {
+    padding-left: 10% !important;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .dashboard-sidebar {
+    position: relative;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 0;
+    top: 0%;
+    left: 0;
+    width: 0 !important;
+    min-height: 100%;
+    background-color: #5f5f5f;
+    transition: all 0.2s;
+    &--isClose {
+      position: absolute;
+      position: fixed;
+      top: 0%;
+      left: -50px;
+      width: 0 !important;
+      height: 100%;
+      background-color: #5f5f5f;
+      transition: all 0.2s;
+      box-shadow: none;
+    }
+  }
 }
 </style>

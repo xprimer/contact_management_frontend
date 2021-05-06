@@ -14,7 +14,7 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item" v-if="this.logedIn === false">
           <router-link
-            to="login"
+            :to="{name : 'login'}"
             tag="a"
             class="nav-link btn btn-lg btn-primary text-white my-2"
           >
@@ -22,11 +22,11 @@
           </router-link>
         </li>
         <li v-if="this.logedIn===true" class="nav-item">
-          <router-link to="dashboard" tag="a" class="nav-link btn btn-success text-white mx-1 my-2">
+          <router-link to="/dashboard/" tag="a" class="nav-link mx-1 my-2">
             Dashboard
           </router-link>
         </li>
-        <li class="nav-item" v-if="this.logedIn === true">
+        <li class="nav-item d-flex justify-content-center align-items-center" v-if="this.logedIn === true">
           <div class="btn-group">
             <button
               type="button"
@@ -85,6 +85,6 @@ export default {
 .navbar {
   display: sticky !important;
   box-sizing: border-box;
-  width: 100vw !important;
+  /* width: 100vw !important; */
 }
 </style>

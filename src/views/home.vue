@@ -27,6 +27,7 @@ export default {
     background-repeat: no-repeat;
     background-size: contain;
     z-index: 1;
+    overflow: hidden !important;
 }
 .bg-overlay{
     position: absolute;

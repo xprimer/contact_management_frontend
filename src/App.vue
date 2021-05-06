@@ -1,7 +1,16 @@
 <template>
   <div id="app">
-    <nav-bar :logedIn="this.logedIn" :user="this.user" :doLogOut="this.doLogOut"></nav-bar>
-    <router-view :isLogedIn="this.isLogedIn" :user="this.user"> </router-view>
+    <nav-bar
+      :logedIn="this.logedIn"
+      :user="this.user"
+      :doLogOut="this.doLogOut"
+    ></nav-bar>
+    <router-view
+      class="main-content"
+      :isLogedIn="this.isLogedIn"
+      :user="this.user"
+    >
+    </router-view>
   </div>
 </template>
 
@@ -61,7 +70,7 @@ export default {
         return true;
       }
       return false;
-    },
+    }
   },
   beforeMount() {
     this.checkLogin();
@@ -70,4 +79,12 @@ export default {
 </script>
 
 <style>
+body {
+  padding: 0 !important;
+  margin: 0 !important;
+  /* overflow: hidden; */
+}
+.main-content {
+  overflow: hidden;
+}
 </style>
