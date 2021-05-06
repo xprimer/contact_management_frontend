@@ -22,7 +22,7 @@
           </router-link>
         </li>
         <li v-if="this.logedIn===true" class="nav-item">
-          <router-link to="dashboard" tag="a" class="nav-link btn btn-success text-white mx-1">
+          <router-link to="dashboard" tag="a" class="nav-link btn btn-success text-white mx-1 my-2">
             Dashboard
           </router-link>
         </li>
@@ -82,4 +82,9 @@ export default {
 </script>
 
 <style>
+.navbar {
+  display: sticky !important;
+  box-sizing: border-box;
+  width: 100vw !important;
+}
 </style>
